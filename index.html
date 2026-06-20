@@ -102,11 +102,20 @@
 
   .hero-name {
     font-family: var(--serif);
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 1.0;
-    letter-spacing: -0.03em;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
     color: var(--ink);
     margin-bottom: 0.4rem;
+  }
+
+  .hero-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border: 3px solid var(--border);
   }
 
   .hero-title {
@@ -787,7 +796,8 @@
 <div class="hero">
   <div class="hero-text">
     <div class="hero-eyebrow">Aarhus University, Denmark</div>
-    <h1 class="hero-name">Ken<br>Pfeuffer</h1>
+    <img src="profilepic.jpg" alt="Ken Pfeuffer" class="hero-avatar">
+    <h1 class="hero-name">Ken Pfeuffer</h1>
     <p class="hero-title">
       <strong>Associate Professor</strong> &amp; Sapere Aude Research Leader<br>
       Human-Computer Interaction · XR · Eye-Hand Symbiosis

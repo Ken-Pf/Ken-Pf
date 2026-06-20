@@ -1,0 +1,2494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ken Pfeuffer — HCI Research, Aarhus University</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e12;
+    --ink-soft: #3a3a48;
+    --ink-muted: #8888a0;
+    --paper: #f7f6f3;
+    --surface: #ffffff;
+    --accent: #2d5be3;
+    --accent-light: #e8eeff;
+    --accent-warm: #e84c1e;
+    --border: #e2e1dd;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+    --serif: 'DM Serif Display', serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ───────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,246,243,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 3rem);
+    height: 60px;
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── HERO ──────────────────────────────────────────────── */
+  .hero {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 5rem) clamp(2rem, 5vw, 3rem);
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 2rem; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .hero-title {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    line-height: 1.4;
+  }
+
+  .hero-title strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .hero-bio {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    max-width: 72ch;
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  .hero-links {
+    display: flex; flex-wrap: wrap; gap: 0.75rem;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--sans);
+    text-decoration: none;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #1d46c9; transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* Hero visual side */
+  .hero-visual {
+    position: relative;
+    background: var(--ink);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%;
+  }
+
+  .hero-visual-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Animated eye-hand diagram */
+  .eye-diagram {
+    width: 420px;
+    height: 380px;
+    position: relative;
+  }
+
+  .diagram-label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stat-badge {
+    position: absolute;
+    bottom: 2.5rem; left: 2.5rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .stat-badge-num {
+    font-family: var(--serif);
+    font-size: 2rem;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-badge-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── SECTIONS ──────────────────────────────────────────── */
+  section {
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  /* ── RESEARCH VISION ───────────────────────────────────── */
+  .research-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .research-body p {
+    color: var(--ink-soft);
+    margin-bottom: 1.25rem;
+    font-size: 1.025rem;
+    line-height: 1.78;
+  }
+
+  .research-body p:first-child {
+    color: var(--ink);
+    font-size: 1.1rem;
+  }
+
+  .concept-cards {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .concept-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .concept-card:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .concept-card-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .concept-card-desc {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.6;
+  }
+
+  /* ── PUBLICATIONS ──────────────────────────────────────── */
+  .pub-section { background: var(--surface); }
+
+  .pub-year-group {
+    margin-bottom: 3rem;
+  }
+
+  .pub-year {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pub-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .pub-item:last-child { border-bottom: none; }
+
+  .pub-venue {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 0.2rem;
+    white-space: nowrap;
+    width: 80px;
+  }
+
+  .pub-info {}
+
+  .pub-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+
+  .pub-authors {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .pub-authors em {
+    font-style: normal;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .pub-links {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+  }
+
+  .pub-link {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+    transition: opacity 0.2s;
+  }
+  .pub-link:hover { opacity: 0.65; }
+
+  /* ── TEAM ──────────────────────────────────────────────── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .team-card:hover { border-color: var(--accent); }
+
+  .team-card.lead {
+    border-color: var(--accent);
+    background: var(--accent-light);
+  }
+
+  .team-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .team-role {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    font-family: var(--mono);
+  }
+
+  .team-focus {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* ── TALKS ─────────────────────────────────────────────── */
+  .talks-list {
+    display: flex; flex-direction: column; gap: 2rem;
+  }
+
+  .talk-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .talk-year {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+    color: var(--ink);
+    line-height: 1;
+    padding-top: 0.2rem;
+    white-space: nowrap;
+  }
+
+  .talk-venue {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .talk-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .talk-desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+
+  /* ── CONTACT ───────────────────────────────────────────── */
+  .contact-section {
+    background: var(--ink);
+    max-width: 100%;
+    padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+  }
+
+  .contact-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-section .section-label { color: rgba(255,255,255,0.4); }
+  .contact-section .section-title { color: #fff; }
+
+  .contact-text {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.75;
+    margin-top: 1.5rem;
+  }
+
+  .contact-text a {
+    color: rgba(255,255,255,0.9);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .contact-links-grid {
+    display: flex; flex-direction: column; gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .contact-link-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .contact-link-row:hover { background: rgba(255,255,255,0.1); }
+
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-link-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .contact-link-sub {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+    font-family: var(--mono);
+  }
+
+  /* ── FOOTER ────────────────────────────────────────────── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem clamp(1.5rem, 5vw, 5rem);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .footer-text {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    font-family: var(--mono);
+  }
+
+  /* ── GAZE VIZ (SVG animation) ──────────────────────────── */
+  .gaze-svg {
+    width: 100%; height: 100%; position: absolute; inset: 0;
+    opacity: 0.85;
+  }
+
+  /* ── MOBILE ────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero-text { padding-left: clamp(1.5rem, 5vw, 3rem); padding-right: clamp(1.5rem, 5vw, 3rem); }
+    .research-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .nav-links { display: none; }
+    .pub-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .pub-venue { width: auto; }
+    .talk-item { grid-template-columns: 1fr; gap: 0.75rem; }
+  }
+
+  /* ── SCROLL FADE ───────────────────────────────────────── */
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  .hero-socials {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+    margin-top: 1.5rem;
+  }
+  .hero-socials a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .hero-socials a:hover { color: var(--ink); }
+  .hero-socials span { color: var(--border); }
+
+  /* expandable pub year groups */
+  .pub-year-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .pub-year-toggle:hover .pub-year { color: var(--accent); }
+  .pub-toggle-icon {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    transition: transform 0.2s;
+  }
+  .pub-year-group.open .pub-toggle-icon { transform: rotate(45deg); }
+  .pub-year-body { display: none; }
+  .pub-year-group.open .pub-year-body { display: block; }
+  .pub-year-group:first-child { }
+
+
+  /* ── VIDEO CAROUSEL ─────────────────────────────────────── */
+  .carousel-wrap {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    display: flex; flex-direction: column;
+    gap: 1.1rem;
+    padding: clamp(2rem, 5vw, 3rem) 1.5rem;
+  }
+
+  .carousel-slide { display: none; flex-direction: column; gap: 0.85rem; }
+  .carousel-slide.active { display: flex; }
+
+  .carousel-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    background: #000;
+  }
+  .carousel-thumb {
+    display: block;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .carousel-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 52px; height: 52px;
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 1.05rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .carousel-video:hover .carousel-play {
+    background: var(--accent);
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+
+  .carousel-meta {
+    display: flex; flex-direction: column; gap: 0.3rem;
+    min-height: 2.6rem;
+  }
+  .carousel-venue {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .carousel-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.35;
+  }
+
+  .carousel-controls {
+    display: flex; align-items: center; gap: 0.85rem;
+  }
+  .carousel-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.7);
+    border-radius: 6px;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 0.95rem;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .carousel-btn:hover { background: rgba(255,255,255,0.16); color: #fff; }
+
+  .carousel-dots {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+  }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer; transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .carousel-dot.active { background: var(--accent); }
+
+  .carousel-counter {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    color: rgba(255,255,255,0.3);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+
+  /* ── TALK ARCHIVE ──────────────────────────────────────── */
+  .archive-toggle-wrap {
+    margin-top: 2.5rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .archive-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--ink);
+    background: var(--surface);
+    transition: background 0.2s;
+  }
+  .archive-toggle:hover { background: var(--accent-light); }
+  .archive-toggle-wrap.open .pub-toggle-icon { transform: rotate(45deg); }
+  .archive-body { display: none; }
+  .archive-toggle-wrap.open .archive-body { display: block; }
+  .archive-talk-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1.25rem;
+    padding: 0.85rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .archive-talk-date {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    padding-top: 0.1rem;
+  }
+  .archive-talk-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .archive-talk-venue {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    margin-top: 0.15rem;
+  }
+  @media (max-width: 768px) {
+    .archive-talk-row { grid-template-columns: 1fr; gap: 0.3rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ken Pfeuffer</a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#talks">Talks</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Aarhus University, Denmark</div>
+    <h1 class="hero-name">Ken<br>Pfeuffer</h1>
+    <p class="hero-title">
+      <strong>Associate Professor</strong> &amp; Sapere Aude Research Leader<br>
+      Human-Computer Interaction · XR · Eye-Hand Symbiosis
+    </p>
+    <p class="hero-bio">
+      I'm an Associate Professor and Sapere Aude Research Leader in Human-Computer Interaction (HCI) at Aarhus University in Denmark. I lead the <a href="#team" style="color:var(--ink); text-decoration:underline; text-underline-offset:3px;">XI team</a>, where we explore how we can render technology more natural to use — especially through multimodal, spatial, and AI-driven techniques in emerging computer devices (mobiles, wearables, AR/VR).
+    </p>
+    <p class="hero-bio" style="font-size:0.92rem; color:var(--ink-muted); margin-top:-1rem;">
+      Previously: PhD from Lancaster University (UK), postdoc at Bundeswehr University (Germany), and research internships at Microsoft and Google Research.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="https://scholar.google.com/citations?user=AqmxADkAAAAJ" target="_blank">↗ Google Scholar</a>
+      <a class="btn btn-ghost" href="#publications">Publications</a>
+      <a class="btn btn-ghost" href="#contact">Contact</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://x.com/KenPfeuffer" target="_blank">X / Twitter</a>
+      <span>·</span>
+      <a href="https://www.linkedin.com/in/ken-pfeuffer-404377129/" target="_blank">LinkedIn</a>
+      <span>·</span>
+      <a href="https://medium.com/@ken.pfeuffer" target="_blank">Medium</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="carousel-wrap">
+
+      <div class="carousel-slide active" data-yt="HaNuWBy2ljo">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/HaNuWBy2ljo/hqdefault.jpg" alt="StylusPort: Investigating Teleportation Using Stylus in VR">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '26</div>
+          <div class="carousel-title">StylusPort: Investigating Teleportation Using Stylus in VR</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="Gcdc1nDvvDI">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/Gcdc1nDvvDI/hqdefault.jpg" alt="At a Glance to Your Fingertips: SightWarp">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">UIST '25</div>
+          <div class="carousel-title">At a Glance to Your Fingertips: SightWarp</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="WW28_kmLrtw">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/WW28_kmLrtw/hqdefault.jpg" alt="Multimodal Pen + Gaze Interaction for Shape Translation in XR">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">ISMAR '25</div>
+          <div class="carousel-title">Multimodal Pen + Gaze Interaction for Shape Translation in XR</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="EZvuSkeue5A">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/EZvuSkeue5A/hqdefault.jpg" alt="Hands-on, Hands-off: Gaze-Assisted Bimanual 3D Interaction">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">UIST '24</div>
+          <div class="carousel-title">Hands-on, Hands-off: Gaze-Assisted Bimanual 3D Interaction</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="15CQReHj5yg">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/15CQReHj5yg/hqdefault.jpg" alt="Eye-Hand Movement of Objects in Near Space Extended Reality">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">UIST '24</div>
+          <div class="carousel-title">Eye-Hand Movement of Objects in Near Space Extended Reality</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="RnmXo1hGiOI">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/RnmXo1hGiOI/hqdefault.jpg" alt="Blended Whiteboard: Physicality and Reconfigurability in Remote Mixed Reality Collaboration">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '24</div>
+          <div class="carousel-title">Blended Whiteboard: Physicality and Reconfigurability in Remote Mixed Reality Collaboration</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="fqx7mrzHE90">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/fqx7mrzHE90/hqdefault.jpg" alt="PalmGazer: Unimanual Eye-Hand Menus in Augmented Reality">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">SUI '23</div>
+          <div class="carousel-title">PalmGazer: Unimanual Eye-Hand Menus in Augmented Reality</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="GaRiRhSy2ZY">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/GaRiRhSy2ZY/hqdefault.jpg" alt="A Fitts' Law Study of Gaze-Hand Alignment for Selection in 3D User Interfaces">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '23</div>
+          <div class="carousel-title">A Fitts' Law Study of Gaze-Hand Alignment for Selection in 3D User Interfaces</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="eAv5sPGdT_4">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/eAv5sPGdT_4/hqdefault.jpg" alt="Partially Blended Realities: Aligning Dissimilar Spaces for Distributed Mixed Reality Meetings">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '23</div>
+          <div class="carousel-title">Partially Blended Realities: Aligning Dissimilar Spaces for Distributed Mixed Reality Meetings</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="U0T_wd_VD9w">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/U0T_wd_VD9w/hqdefault.jpg" alt="Gaze-Hand Alignment: Eye Gaze and Mid-Air Pointing for Menus in AR">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">ETRA '22</div>
+          <div class="carousel-title">Gaze-Hand Alignment: Eye Gaze and Mid-Air Pointing for Menus in AR</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="9BimEnTJefE">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/9BimEnTJefE/hqdefault.jpg" alt="Multi-user Gaze-based Interaction Techniques on Collaborative Touchscreens">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">COGAIN @ ETRA '21</div>
+          <div class="carousel-title">Multi-user Gaze-based Interaction Techniques on Collaborative Touchscreens</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="EPtzwnbPiBo">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/EPtzwnbPiBo/hqdefault.jpg" alt="SpatialProto: Rapid Prototyping of Interactive Mixed Reality">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '21</div>
+          <div class="carousel-title">SpatialProto: Rapid Prototyping of Interactive Mixed Reality</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="A_gUI4dhehc">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/A_gUI4dhehc/hqdefault.jpg" alt="ARtention: A Design Space for Gaze-Adaptive User Interfaces in Augmented Reality">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">C&G '21</div>
+          <div class="carousel-title">ARtention: A Design Space for Gaze-Adaptive User Interfaces in Augmented Reality</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="NzLrZSF8aDM">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/NzLrZSF8aDM/hqdefault.jpg" alt="Gaze + Pinch Interaction in Virtual Reality">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">SUI '17</div>
+          <div class="carousel-title">Gaze + Pinch Interaction in Virtual Reality</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="8snFa7FRt-M">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/8snFa7FRt-M/hqdefault.jpg" alt="Gaze-Shifting: Direct-Indirect Input with Pen and Touch Modulated by Gaze">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">UIST '15</div>
+          <div class="carousel-title">Gaze-Shifting: Direct-Indirect Input with Pen and Touch Modulated by Gaze</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="vFpZP22WCqc">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/vFpZP22WCqc/hqdefault.jpg" alt="Gaze-Touch: Combining Gaze with Multi-touch on the Same Surface">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">UIST '14</div>
+          <div class="carousel-title">Gaze-Touch: Combining Gaze with Multi-touch on the Same Surface</div>
+        </div>
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prev-btn">&#8592;</button>
+        <button class="carousel-btn" id="next-btn">&#8594;</button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <span class="carousel-counter" id="carousel-counter">1 / 16</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-header fade-in">
+    <span class="section-label">01 / Research</span>
+    <h2 class="section-title">Human-Computer Interaction</h2>
+  </div>
+  <div class="research-grid">
+    <div class="research-body fade-in">
+      <p>
+        I study how people interact with computers — and how to make that interaction more natural, expressive, and powerful. My work sits at the intersection of input modalities, interface design, and human behavior, spanning devices from smartphones to AR/VR headsets and AI glasses.
+      </p>
+      <p>
+        A central theme is <strong>Eye-Hand Symbiosis</strong>: combining gaze and hand input to unlock a fundamentally richer interaction space, where you act on <em>any object you see</em> from <em>any hand position</em>. This line of work, running since 2013, now underpins interaction paradigms in devices like Apple Vision Pro.
+      </p>
+      <p>
+        Across all areas, I work through prototyping explorations, empirical studies, and design space research — building working systems, running controlled experiments, and mapping out the space of possibilities to distill findings into design guidelines grounded in real human behavior.
+      </p>
+      <div style="margin-top:2rem; display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="display:flex; gap:1rem; align-items:baseline;">
+          <span style="font-family:var(--mono); font-size:0.68rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; min-width:60px;">Teaching</span>
+          <span style="font-size:0.9rem; color:var(--ink-soft);">3D User Interfaces — Dept. of Computer Science, Aarhus University</span>
+        </div>
+        <div style="display:flex; gap:1rem; align-items:baseline;">
+          <span style="font-family:var(--mono); font-size:0.68rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; min-width:60px;">Center</span>
+          <span style="font-size:0.9rem; color:var(--ink-soft);">Co-lead, XR &amp; 3D UI group — <a href="https://www.aicentre.dk/" target="_blank" style="color:var(--ink); text-decoration:underline; text-underline-offset:3px;">Danish Pioneer Center for AI</a></span>
+        </div>
+        <div style="display:flex; gap:1rem; align-items:baseline;">
+          <span style="font-family:var(--mono); font-size:0.68rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.08em; white-space:nowrap; min-width:60px;">Grant</span>
+          <span style="font-size:0.9rem; color:var(--ink-soft);">DFF Sapere Aude — Spatial Human-AI Collaboration</span>
+        </div>
+      </div>
+    </div>
+    <div class="concept-cards fade-in">
+      <div style="font-family:var(--mono); font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.75rem;">Research Interests</div>
+      <div class="concept-card">
+        <div class="concept-card-title">Human-Computer Interaction</div>
+        <div class="concept-card-desc">Input techniques, interaction paradigms, and UI design — with a strong empirical and human-centered foundation.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-title">Extended Reality (XR)</div>
+        <div class="concept-card-desc">Spatial computing across AR, VR, and AI glasses — designing 3D UIs that feel natural in the physical world.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-title">Eye Tracking &amp; Gaze Interaction</div>
+        <div class="concept-card-desc">Gaze as a first-class input modality — from fundamental Fitts' Law studies to adaptive, attention-aware interfaces.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-title">Multimodal Interaction</div>
+        <div class="concept-card-desc">Combining eyes, hands, and context — especially Eye-Hand Symbiosis — to create richer, more expressive control.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-title">Mixed Reality &amp; Collaboration</div>
+        <div class="concept-card-desc">Blending physical and virtual objects; supporting multi-user interaction in shared spatial environments.</div>
+      </div>
+      <div class="concept-card">
+        <div class="concept-card-title">Adaptive &amp; AI-Driven UI</div>
+        <div class="concept-card-desc">Interfaces that respond to attention, intent, and context — including spatial human-AI collaboration in XR.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<div class="pub-section">
+<section id="publications">
+  <div class="section-header fade-in">
+    <span class="section-label">02 / Publications</span>
+    <h2 class="section-title">Publications</h2>
+  </div>
+  <p class="fade-in" style="color:var(--ink-muted); font-size:0.88rem; margin-bottom:2rem;">
+    Click a year to expand. Full list on <a href="https://scholar.google.com/citations?user=AqmxADkAAAAJ" target="_blank" style="color:var(--accent);">Google Scholar</a>.
+  </p>
+
+  <div class="pub-year-group open fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2026 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">5 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Preshaping Hand Behaviour for Direct and Indirect Manipulation of 3D Objects</div>
+          <div class="pub-authors">Thorbjørn Mikkelsen, Qiushi Zhou, Mar Gonzalez-Franco, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">StylusPort: Investigating Teleportation Using Stylus in VR</div>
+          <div class="pub-authors">Yang Liu, Qiushi Zhou, Mathias N. Lystbæk, Aidan Kehoe, Mario Gutierrez, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Eyes on Many: Evaluating Gaze, Hand, and Voice for Multi-Object Selection in Extended Reality</div>
+          <div class="pub-authors">Mohammad Raihanul Bashar, Aunnoy K Mutasim, <em>Ken Pfeuffer</em>, Anil Ufuk Batmaz</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IEEE VR</div>
+        <div class="pub-info">
+          <div class="pub-title">Eye-Hand Interaction in XR Through the Lens of Instrumental Interaction</div>
+          <div class="pub-authors">Qiushi Zhou, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ACM CGIT</div>
+        <div class="pub-info">
+          <div class="pub-title">Align-to-Scale: Mode Switching Technique for Unimanual 3D Object Manipulation with Gaze-Hand-Object Alignment in XR</div>
+          <div class="pub-authors">Min-yung Kim, Jinwook Kim, <em>Ken Pfeuffer</em>, Sang Ho Yoon</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group open fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2025 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">12 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">PinchCatcher: Enabling Multi-Selection for Gaze + Pinch</div>
+          <div class="pub-authors">Jinwook Kim, Sangmin Park, Qiushi Zhou, Mar Gonzalez-Franco, Jeongmi Lee, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Online-EYE: Multimodal Implicit Eye Tracking Calibration for XR</div>
+          <div class="pub-authors">Baosheng James Hou, Lucy Abramyan, Prasanthi Gurumurthy, et al., <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">At a Glance to Your Fingertips: Enabling Direct Manipulation of Distant Objects Through SightWarp</div>
+          <div class="pub-authors">Yang Liu, Thorbjørn Mikkelsen, Zehai Liu, Gengchen Tian, Diako Mardanbegi, Qiushi Zhou, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR</div>
+        <div class="pub-info">
+          <div class="pub-title">A Study of Multimodal Pen + Gaze Interaction Techniques for Shape Point Translation in XR</div>
+          <div class="pub-authors">Uta Wagner, Jinwook Kim, Zhikun Wu, Qiushi Zhou, et al., <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR</div>
+        <div class="pub-info">
+          <div class="pub-title">Mapping 6DOF Hand Movement to Concurrent 3DOF Controls of Translation and Rotation in XR</div>
+          <div class="pub-authors">Thorbjørn Mikkelsen, Qiushi Zhou, Mathias N. Lystbæk, Yang Liu, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR</div>
+        <div class="pub-info">
+          <div class="pub-title">DOF-Separation for 3D Manipulation in XR: Understanding Finger-Wrist Separation</div>
+          <div class="pub-authors">Thorbjørn Mikkelsen, Qiushi Zhou, Mathias N. Lystbæk, Yang Liu, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR</div>
+        <div class="pub-info">
+          <div class="pub-title">HeadDepth: Gaze Raycasting with Head Pitch for Depth Control</div>
+          <div class="pub-authors">Haopeng Wang, Florian Weidner, Yasmeen Abdrabou, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR-Adj.</div>
+        <div class="pub-info">
+          <div class="pub-title">SpatialPad — Air-taps for Interaction in XR</div>
+          <div class="pub-authors">Juan Sánchez Esquivel, Lauren Zerbin, Qiushi Zhou, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR-Adj.</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze + Mouth: Gaze-Directed Tongue Input with Intraoral Device for Selection in XR</div>
+          <div class="pub-authors">Thorbjørn Mikkelsen, Yijing Jiang, Baris F. Coskun, Michael Wessely, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR-Adj.</div>
+        <div class="pub-info">
+          <div class="pub-title">Eyes on Target, Pen on Table: Precise VR Interaction with Gaze and Pen</div>
+          <div class="pub-authors">Zhikun Wu, Uta Wagner, Mario Romero, Alessandro Iop, Andrii Matviienko, <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IEEE VR</div>
+        <div class="pub-info">
+          <div class="pub-title">H²E: Hand, Head, Eye — A Multimodal Cascade of Natural Inputs</div>
+          <div class="pub-authors">Khushman Patel, Vrushank Phadnis, Eric J. Gonzalez, Hans Gellersen, <em>Ken Pfeuffer</em>, Mar Gonzalez-Franco</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Depth3DSketch: Freehand Sketching Out of Arm's Reach in Virtual Reality</div>
+          <div class="pub-authors">Mohammad Raihanul Bashar, et al., <em>Ken Pfeuffer</em></div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2024 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">9 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">ISMAR</div>
+        <div class="pub-info">
+          <div class="pub-title">Filtering on the Go: Effect of Filters on Gaze Pointing Accuracy During Physical Locomotion in XR</div>
+          <div class="pub-authors">Pavel Manakhov, Ludwig Sidenmark, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://pure.au.dk/ws/portalfiles/portal/385504319/ISMAR_24-Filtering_on_the_Go.pdf" target="_blank">PDF</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Eye-Hand Movement of Objects in Near Space</div>
+          <div class="pub-authors">Uta Wagner, Andreas Asferg Jacobsen, Tiare Feuchtner, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://pure.au.dk/portal/files/386719619/uist24a-sub3907-cam-i32-1.pdf" target="_blank">PDF</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Hands-on, Hands-off: Gaze-Assisted Bimanual 3D Interaction</div>
+          <div class="pub-authors">Mathias N. Lystbæk, Thorbjørn Mikkelsen, Roland Krisztandl, Eric J. Gonzalez, Mar Gonzales-Franco, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://pure.au.dk/portal/files/386468510/uist24-9.pdf" target="_blank">PDF</a><a class="pub-link" href="https://doi.org/10.1145/3654777.3676331" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ISS</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze, Wall, and Racket: Combining Gaze and Hand-controlled Plane for 3D Selection in Virtual Reality</div>
+          <div class="pub-authors">Uta Wagner, Andreas Asferg Jacobsen, Matthias Albrecht, Haopeng Wang, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://gemini-erc.eu/s/CRV_ISS_24___Gaze__Wall_and_Racket__Resubmission_Uta_.pdf" target="_blank">PDF</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IEEE CG&A</div>
+        <div class="pub-info">
+          <div class="pub-title">Design Principles and Challenges for Gaze + Pinch Interaction in XR</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Hans Gellersen, Mar Gonzalez-Franco</div>
+          <div class="pub-links"><a class="pub-link" href="https://www.computer.org/csdl/magazine/cg/2024/03/10568496/1XXizOoh8CQ" target="_blank">DOI</a><a class="pub-link" href="https://arxiv.org/abs/2401.10948" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze on the Go: Effect of Spatial Reference Frame on Visual Target Acquisition During Physical Locomotion in XR</div>
+          <div class="pub-authors">Pavel Manakhov, Ludwig Sidenmark, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3613904.3642915" target="_blank">DOI</a><a class="pub-link" href="https://www.youtube.com/watch?v=QeowFT75uLc" target="_blank">Video</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">EyeGuide & EyeConGuide: Gaze-based Visual Guides to Improve 3D Sketching Systems</div>
+          <div class="pub-authors">Rumeysa Turkmen, Zeynep Ecem Gelmez, Anil Ufuk Batmaz, Wolfgang Stuerzlinger, Paul Asente, Mine Sarac, <em>Ken Pfeuffer</em>, Mayra Donaji Barrera Machuca</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3613904.3641947" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Spatial Gaze Markers: Supporting Effective Task Switching in Augmented Reality</div>
+          <div class="pub-authors">Mathias N. Lystbæk, <em>Ken Pfeuffer</em>, Tobias Langlotz, Jens Emil Sloth Grønbæk, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://pure.au.dk/portal/files/377609682/v1.28_-_no-copyright_-_Spatial_Gaze_Markers_-_Supporting_Effective_Task_Switching_in_Augmented_Reality_1_.pdf" target="_blank">PDF</a><a class="pub-link" href="https://doi.org/10.1145/3613904.3642811" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Blended Whiteboard: Physicality and Reconfigurability in Remote Mixed Reality Collaboration</div>
+          <div class="pub-authors">Jens Emil Sloth Grønbæk, Juan Sánchez Esquivel, Germán Leiva, Eduardo Velloso, Hans Gellersen, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3613904.3642229" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2023 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">10 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MuC</div>
+        <div class="pub-info">
+          <div class="pub-title">How Unique do we Move? Understanding the Human Body and Context Factors for User Identification</div>
+          <div class="pub-authors">Yasmeen Abdrabou, Lukas Mecke, Radiah Rivu, Sarah Prange, Quy Dat Nguyen, Vanessa Voigt, Florian Alt, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3603555.3603565" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">INTERACT</div>
+        <div class="pub-info">
+          <div class="pub-title">Empowering Users: Leveraging Interface Cues to Enhance Password Security</div>
+          <div class="pub-authors">Yasmeen Abdrabou, Marco Asbeck, <em>Ken Pfeuffer</em>, Yomna Abdelrahman, Mariam Hassib, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1007/978-3-031-42283-6_20" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">SUI</div>
+        <div class="pub-info">
+          <div class="pub-title">PalmGazer: Unimanual Eye-Hand Menus in Augmented Reality</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jan Obernolte, Felix Dietz, Ville Mäkelä, Ludwig Sidenmark, Pavel Manakhov, Minna Pakanen, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://arxiv.org/abs/2306.12402" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Towards Flexible and Robust User Interface Adaptations With Multiple Objectives</div>
+          <div class="pub-authors">Christoph Albert Johns, João Marcelo Evangelista Belo, Anna Maria Feit, Clemens Nylandsted Klokmose, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3586183.3606728" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze-based Mode-Switching to Enhance Interaction with Menus on Tablets</div>
+          <div class="pub-authors">Yanfei Hu, Hemant Surale, Florian Alt, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3588015.3588410" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">arXiv</div>
+        <div class="pub-info">
+          <div class="pub-title">Revealing the Hidden Effects of Phishing Emails: An Analysis of Eye and Mouse Movements in Email Sorting Tasks</div>
+          <div class="pub-authors">Yasmeen Abdrabou, Felix Dietz, Ahmed Shams, Pascal Knierim, Yomna Abdelrahman, <em>Ken Pfeuffer</em>, Mariam Hassib, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://arxiv.org/abs/2305.17044" target="_blank">arXiv</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Pareto Optimal Layouts for Adaptive Mixed Reality</div>
+          <div class="pub-authors">Christoph Albert Johns, João Marcelo Evangelista Belo, Clemens Nylandsted Klokmose, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3544549.3585732" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">A Fitts' Law Study of Gaze-Hand Alignment for Selection in 3D User Interfaces</div>
+          <div class="pub-authors">Uta Wagner, Mathias N. Lystbæk, Pavel Manakhov, Jens Emil Grønbæk, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3544548.3581423" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Partially Blended Realities: Aligning Dissimilar Spaces for Distributed Mixed Reality Meetings</div>
+          <div class="pub-authors">Jens Emil Grønbæk, <em>Ken Pfeuffer</em>, Eduardo Velloso, Morten Astrup, Melanie Sønderkær Pedersen, Martin Kjær, Germán Leiva, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3544548.3581515" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Vergence Matching: Inferring Attention to Objects in 3D Environments for Gaze-Assisted Selection</div>
+          <div class="pub-authors">Ludwig Sidenmark, Christopher Clarke, Joshua Newn, Mathias N. Lystbæk, <em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3544548.3580685" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2022 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">8 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MUM</div>
+        <div class="pub-info">
+          <div class="pub-title">A Practical Method to Eye-tracking on the Phone: Toolkit, Accuracy and Precision</div>
+          <div class="pub-authors">Thanh Le, Felix Dietz, <em>Ken Pfeuffer</em>, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3568444.3568463" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">AUIT — The Adaptive User Interfaces Toolkit for Designing XR Applications</div>
+          <div class="pub-authors">João Marcelo Evangelista Belo, Mathias N. Lystbæk, Anna Maria Feit, <em>Ken Pfeuffer</em>, Peter Kán, Antti Oulasvirta, Kaj Grønbæk</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3526113.3545651" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IMWUT</div>
+        <div class="pub-info">
+          <div class="pub-title">One-handed Input for Mobile Devices via Motion Matching and Orbits Controls</div>
+          <div class="pub-authors">Augusto Esteves, Elizabeth Bouquet, <em>Ken Pfeuffer</em>, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3534624" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Look & Turn: One-handed and Expressive Menu Interaction by Gaze and Arm Turns in VR</div>
+          <div class="pub-authors">Katharina Reiter, <em>Ken Pfeuffer</em>, Augusto Esteves, Tim Mittermeier, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3517031.3529233" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Exploring Gaze for Assisting Freehand Selection-based Text Entry in AR</div>
+          <div class="pub-authors">Mathias N. Lystbæk, <em>Ken Pfeuffer</em>, Jens Emil Sloth Grønbæk, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3530882" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze-Hand Alignment: Combining Eye Gaze and Mid-Air Pointing for Interacting with Menus in Augmented Reality</div>
+          <div class="pub-authors">Mathias N. Lystbæk, Peter Rosenberg, <em>Ken Pfeuffer</em>, Jens Emil Grønbæk, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3530886" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">"Your Eyes Tell You Have Used This Password Before": Identifying Password Reuse from Gaze and Keystroke Dynamics</div>
+          <div class="pub-authors">Yasmeen Abdrabou, Johannes Schütte, Ahmed Shams, <em>Ken Pfeuffer</em>, Daniel Buschek, Mohamed Khamis, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3491102.3517531" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Exploring Discrete Drawing Guides to Assist Users in Accurate Mid-air Sketching in VR</div>
+          <div class="pub-authors">Rumeysa Türkmen, <em>Ken Pfeuffer</em>, Mayra Donaji Barrera Machuca, Anil Ufuk Batmaz, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3491101.3519737" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2021 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">10 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">TOCHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Remote VR Studies: A Framework for Running Virtual Reality Studies Remotely Via Participant-Owned HMDs</div>
+          <div class="pub-authors">Rivu Radiah, Ville Mäkelä, Sarah Prange, et al., <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3472617" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">SUI</div>
+        <div class="pub-info">
+          <div class="pub-title">Altering Non-verbal Cues to Implicitly Direct Attention in Social VR</div>
+          <div class="pub-authors">Radiah Rivu, <em>Ken Pfeuffer</em>, Philipp Müller, Yomna Abdelrahman, Andreas Bulling, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3485279.3485309" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">SUI</div>
+        <div class="pub-info">
+          <div class="pub-title">I'm in Control! Transferring Object Ownership Between Remote Users with Haptic Props in VR</div>
+          <div class="pub-authors">Jonas Auda, Leon Busse, <em>Ken Pfeuffer</em>, Uwe Gruenefeld, Radiah Rivu, Florian Alt, Stefan Schneegass</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3485279.3485287" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Bi-3D: Bi-Manual Pen-and-Touch Interaction for 3D Manipulation on Tablets</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Abdullatif Dinc, Jan Obernolte, Radiah Rivu, Yasmeen Abdrabou, Franziska Shelter, Yomna Abdelrahman, Florian Alt</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Multi-user Gaze-based Interaction Techniques on Collaborative Touchscreens</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3448018.3458016" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Did You Understand This? Leveraging Gaze Behavior to Assess Questionnaire Comprehension</div>
+          <div class="pub-authors">Radiah Rivu, Yasmeen Abdrabou, Yomna Abdelrahman, <em>Ken Pfeuffer</em>, Dagmar Kern, Cornelia Neuert, Daniel Buschek, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3448018.3458018" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">SpatialProto: Using Real-World Captures for Rapid Prototyping of Mixed Reality Experiences</div>
+          <div class="pub-authors">Leon Müller, <em>Ken Pfeuffer</em>, Jan Gugenheimer, Sarah Prange, Bastian Pfleging, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3411764.3445560" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">C&G</div>
+        <div class="pub-info">
+          <div class="pub-title">ARtention: A Design Space for Gaze-Adaptive User Interfaces in Augmented Reality</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Yasmeen Abdrabou, Augusto Esteves, Radiah Rivu, Yomna Abdelrahman, Stefanie Meitner, Amr Saadi, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1016/j.cag.2021.01.001" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">INTERACT</div>
+        <div class="pub-info">
+          <div class="pub-title">Looking for Info: Evaluation of Gaze Based Information Retrieval in Augmented Reality</div>
+          <div class="pub-authors">Robin Piening, <em>Ken Pfeuffer</em>, Augusto Esteves, Tim Mittermeier, Sarah Prange, Philippe Schröder, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1007/978-3-030-85623-6_32" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">Book Ch.</div>
+        <div class="pub-info">
+          <div class="pub-title">Human Performance Modeling with Deep Learning</div>
+          <div class="pub-authors">Arianna Yuan, <em>Ken Pfeuffer</em>, Yang Li</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1007/978-3-030-82681-9_1" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2020 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">5 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MUM</div>
+        <div class="pub-info">
+          <div class="pub-title">PIANX — A Platform for Piano Players to Alleviate Music Performance Anxiety Using Mixed Reality</div>
+          <div class="pub-authors">Yara Fanger, <em>Ken Pfeuffer</em>, Udo Helmbrecht, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3428361.3428394" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">VRST</div>
+        <div class="pub-info">
+          <div class="pub-title">Empirical Evaluation of Gaze-enhanced Menus in Virtual Reality</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Lukas Mecke, Sarah Delgado Rodriguez, Mariam Hassib, Hannah Maier, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3385956.3418962" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">GazeLockPatterns: Comparing Authentication Using Gaze and Touch for Entering Lock Patterns</div>
+          <div class="pub-authors">Yasmeen Abdrabou, <em>Ken Pfeuffer</em>, Mohamed Khamis, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3379156.3391371" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">StARe: Gaze-Assisted Face-to-Face Communication in Augmented Reality</div>
+          <div class="pub-authors">Radiah Rivu, Yasmeen Abdrabou, <em>Ken Pfeuffer</em>, Augusto Esteves, Stefanie Meitner, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3379157.3388930" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze'N'Touch: Enhancing Text Selection on Mobile Devices Using Gaze</div>
+          <div class="pub-authors">Radiah Rivu, Yasmeen Abdrabou, <em>Ken Pfeuffer</em>, Mariam Hassib, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3334480.3382802" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2019 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">6 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MUM</div>
+        <div class="pub-info">
+          <div class="pub-title">Exploring the Domestication of Thermal Imaging</div>
+          <div class="pub-authors">Yomna Abdelrahman, Paweł W. Woźniak, Pascal Knierim, Dominik Weber, <em>Ken Pfeuffer</em>, Niels Henze, Albrecht Schmidt, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3365610.3365648" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">Time- and Space-Efficient Eye Tracker Calibration</div>
+          <div class="pub-authors">Heiko Drewes, <em>Ken Pfeuffer</em>, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3314111.3319818" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IEEE VR</div>
+        <div class="pub-info">
+          <div class="pub-title">EyeSeeThrough: Unifying Tool Selection and Application in Virtual Environments</div>
+          <div class="pub-authors">Diako Mardanbegi, Benedikt Mayer, <em>Ken Pfeuffer</em>, Shahram Jalaliniya, Hans Gellersen, Alexander Perzl</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1109/VR.2019.8797988" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">ETRA</div>
+        <div class="pub-info">
+          <div class="pub-title">GazeButton: Enhancing Buttons with Eye Gaze Interactions</div>
+          <div class="pub-authors">Sheikh Rivu, Yasmeen Abdrabou, Thomas Mayer, <em>Ken Pfeuffer</em>, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3317956.3318154" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Behavioural Biometrics in VR: Identifying People from Body Motion and Relations in Virtual Reality</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Matthias J. Geiger, Sarah Prange, Lukas Mecke, Daniel Buschek, Florian Alt</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Go for GOLD: Investigating User Behaviour in Goal-Oriented Tasks</div>
+          <div class="pub-authors">Sarah Prange, Daniel Buschek, <em>Ken Pfeuffer</em>, Lukas Mecke, Peter Ehrich, Jens Le, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3290607.3312949" target="_blank">DOI</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2018 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">4 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MUM</div>
+        <div class="pub-info">
+          <div class="pub-title">Open Sesame!: User Perception of Physical, Biometric, and Behavioural Authentication Concepts to Open Doors</div>
+          <div class="pub-authors">Lukas Mecke, <em>Ken Pfeuffer</em>, Sarah Prange, Florian Alt</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3282894.3282923" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UbiComp</div>
+        <div class="pub-info">
+          <div class="pub-title">Experience Sampling as Information Transmission: Perspective and Implications</div>
+          <div class="pub-authors">Daniel Buschek, Sarah Völkel, Clemens Stachl, Lukas Mecke, Sarah Prange, <em>Ken Pfeuffer</em></div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3267305.3267543" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">IMWUT</div>
+        <div class="pub-info">
+          <div class="pub-title">Visual Attention-Based Access: Granting Access Based on Users' Joint Attention on Shared Workspaces</div>
+          <div class="pub-authors">Barış Serim, <em>Ken Pfeuffer</em>, Hans Gellersen, Giulio Jacucci</div>
+          <div class="pub-links"><a class="pub-link" href="https://doi.org/10.1145/3264943" target="_blank">DOI</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Analysis and Modelling of Grid Performance on Touchscreen Mobile Devices</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Yang Li</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2017 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">4 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">PhD Thesis</div>
+        <div class="pub-info">
+          <div class="pub-title">Extending Touch with Eye Gaze Input</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Lancaster University, UK</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">SUI</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze + Pinch Interaction in Virtual Reality</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Benedikt Mayer, Diako Mardanbegi, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://www.youtube.com/watch?v=YdKT42tZdQE" target="_blank">Video</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Thumb + Pen Interaction on Tablets</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Ken Hinckley, Michel Pahud, Bill Buxton</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UBICOMP</div>
+        <div class="pub-info">
+          <div class="pub-title">Look Together: Using Gaze for Assisting Co-located Collaborative Search</div>
+          <div class="pub-authors">Yanxia Zhang, <em>Ken Pfeuffer</em>, Ming Ki Chong, Jason Alexander, Andreas Bulling, Hans Gellersen</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2016 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">3 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">MUM</div>
+        <div class="pub-info">
+          <div class="pub-title">GazeArchers: Playing with Individual and Shared Attention in a Two-Player Look&Shoot Tabletop Game</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze and Touch Interaction on Tablets</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Hans Gellersen</div>
+          <div class="pub-links"><a class="pub-link" href="https://www.youtube.com/watch?v=IpD5yWjqMb8" target="_blank">Video</a></div>
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI</div>
+        <div class="pub-info">
+          <div class="pub-title">Partially-Indirect Bimanual Input with Gaze, Pen, and Touch for Pan, Zoom, and Ink Interaction</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Hans Gellersen</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2015 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">3 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze-Shifting: Direct-Indirect Input with Pen and Touch Modulated by Gaze (Best Paper Nominee)</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Ming Ki Chong, Yanxia Zhang, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">UbiComp Adj.</div>
+        <div class="pub-info">
+          <div class="pub-title">A Collaborative Gaze Aware Information Display</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Yanxia Zhang, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">INTERACT</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze+Touch vs. Touch: What's the Trade-off When Using Gaze to Extend Touch to Remote Displays?</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Hans Gellersen</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2014 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">1 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Gaze-Touch: Combining Gaze with Multi-touch for Interaction on the Same Surface</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Jason Alexander, Ming Ki Chong, Hans Gellersen</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2013 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">2 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">UIST</div>
+        <div class="pub-info">
+          <div class="pub-title">Pursuit Calibration: Making Gaze Calibration Less Tedious and More Flexible</div>
+          <div class="pub-authors"><em>Ken Pfeuffer</em>, Melodie Vidal, Jayson Turner, Andreas Bulling, Hans Gellersen</div>
+          
+        </div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-venue">CHI Ext.</div>
+        <div class="pub-info">
+          <div class="pub-title">Pursuits: Eye-based Interaction with Moving Targets</div>
+          <div class="pub-authors">Mélodie Vidal, <em>Ken Pfeuffer</em>, Andreas Bulling, Hans W. Gellersen</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2012 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">1 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">ITS</div>
+        <div class="pub-info">
+          <div class="pub-title">Investigating Mid-air Pointing Interaction for Projector Phones</div>
+          <div class="pub-authors">Christian Winkler, <em>Ken Pfeuffer</em>, Enrico Rukzio</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-year-group fade-in">
+    <div class="pub-year-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <div class="pub-year" style="border:none; margin:0; padding:0;">2011 <span style="font-size:0.7rem; font-family:var(--mono); color:var(--ink-muted); font-weight:400; margin-left:0.5rem;">1 papers</span></div>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="pub-year-body">
+      <div class="pub-item">
+        <div class="pub-venue">PERCOM Ws.</div>
+        <div class="pub-info">
+          <div class="pub-title">Exploring Ambient Visualizations of Context Information</div>
+          <div class="pub-authors">Florian Alt, Alireza Sahami Shirazi, Andreas Kaiser, <em>Ken Pfeuffer</em>, Emre Gürkan, Albrecht Schmidt, Paul Holleis, Matthias Wagner</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fade-in" style="text-align:center; margin-top:2.5rem;">
+    <a class="btn btn-primary" href="https://scholar.google.com/citations?user=AqmxADkAAAAJ" target="_blank">Full list on Google Scholar ↗</a>
+  </div>
+</section>
+</div>
+
+<!-- WRITING -->
+<section id="writing" style="background: var(--surface); max-width:100%; padding: clamp(4rem,8vw,8rem) clamp(1.5rem,5vw,5rem);">
+<div style="max-width:1200px; margin:0 auto;">
+  <div class="section-header fade-in">
+    <span class="section-label">04 / Writing</span>
+    <h2 class="section-title">Popular Science</h2>
+  </div>
+  <p class="fade-in" style="color:var(--ink-soft); max-width:65ch; margin-bottom:2rem; line-height:1.75;">
+    Articles aimed at a broader audience — high-level overviews of research and reflections on the evolution of human-computer interaction.
+  </p>
+  <div class="fade-in" style="display:flex; flex-direction:column; gap:0.75rem;">
+    <a href="https://medium.com/@ken.pfeuffer/eyes-hands-in-ar-a-sci-fi-inspired-mobile-ui-research-7f75b69b15f2" target="_blank" style="display:flex; justify-content:space-between; align-items:baseline; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:0.95rem; font-weight:500; color:var(--ink);">Eyes &amp; Hands in AR: A Sci-Fi-Inspired Mobile UI Research</span>
+      <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-muted); white-space:nowrap; margin-left:1rem;">Oct 2023 · Medium</span>
+    </a>
+    <a href="https://medium.com/antaeus-ar/design-principles-issues-for-gaze-and-pinch-interaction-a95e251169ae" target="_blank" style="display:flex; justify-content:space-between; align-items:baseline; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:0.95rem; font-weight:500; color:var(--ink);">Design Principles &amp; Issues for Gaze and Pinch Interaction</span>
+      <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-muted); white-space:nowrap; margin-left:1rem;">Jan 2024 · Medium</span>
+    </a>
+    <a href="https://medium.com/@ken.pfeuffer/history-of-eyes-and-hands-for-computer-control-fd3a62b56aa1" target="_blank" style="display:flex; justify-content:space-between; align-items:baseline; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:0.95rem; font-weight:500; color:var(--ink);">History of Eyes and Hands for Computer Control</span>
+      <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-muted); white-space:nowrap; margin-left:1rem;">Mar 2024 · Medium</span>
+    </a>
+    <a href="https://futuretextpublishing.com/vol-5/" target="_blank" style="display:flex; justify-content:space-between; align-items:baseline; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:0.95rem; font-weight:500; color:var(--ink);">The Role of Eyes and Hands in the Evolution of Computer Interfaces</span>
+      <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-muted); white-space:nowrap; margin-left:1rem;">Nov 2024 · Future of Text</span>
+    </a>
+    <a href="https://medium.com/@ken.pfeuffer/blending-direct-and-indirect-interaction-a-future-of-computer-interfaces-30952c9dc785" target="_blank" style="display:flex; justify-content:space-between; align-items:baseline; padding:1rem 1.25rem; border:1px solid var(--border); border-radius:8px; text-decoration:none; transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+      <span style="font-size:0.95rem; font-weight:500; color:var(--ink);">Blending Direct and Indirect Interaction: A Concept for Seamless Computer Interfaces</span>
+      <span style="font-family:var(--mono); font-size:0.7rem; color:var(--ink-muted); white-space:nowrap; margin-left:1rem;">Dec 2024 · Medium</span>
+    </a>
+  </div>
+</div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="section-header fade-in">
+    <span class="section-label">03 / Team</span>
+    <h2 class="section-title">Extended Interaction (XI)</h2>
+  </div>
+  <p class="fade-in" style="color:var(--ink-soft); max-width: 65ch; margin-bottom: 2.5rem; font-size: 1rem; line-height:1.75;">
+    A multidisciplinary group at Aarhus University studying how people interact with digital worlds 
+    through the synergy of body modalities — gaze, hand, finger, arm — and emerging computing platforms.
+    <strong style="color:var(--ink);">Open to internships, thesis projects, and research collaborations.</strong>
+  </p>
+  <div class="team-grid">
+    <div class="team-card lead fade-in">
+      <a href="https://scholar.google.com/citations?user=AqmxADkAAAAJ" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Ken Pfeuffer</div>
+      </a>
+      <div class="team-role">Associate Professor · Co-Lead</div>
+      <div class="team-focus">HCI, XR, UI Design, Eye-tracking</div>
+    </div>
+    <div class="team-card lead fade-in">
+      <a href="https://scholar.google.com/citations?user=wmpvU_YAAAAJ" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Hans Gellersen</div>
+      </a>
+      <div class="team-role">Professor · Co-Lead</div>
+      <div class="team-focus">HCI, XR, Eye-tracking, Ubiquitous Computing</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://juan.eu.org/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Juan Sánchez Esquivel</div>
+      </a>
+      <div class="team-role">PhD Researcher</div>
+      <div class="team-focus">Spatial Interaction for XR</div>
+    </div>
+    <div class="team-card fade-in">
+      <div class="team-name">Thorbjørn Mikkelsen</div>
+      <div class="team-role">PhD Researcher</div>
+      <div class="team-focus">Eye-hand Manipulation in 3D</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://www.connorpugh.com/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Connor Pugh</div>
+      </a>
+      <div class="team-role">PhD Researcher</div>
+      <div class="team-focus">Spatial Interaction &amp; XR</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://yanghci.github.io/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Yang Liu</div>
+      </a>
+      <div class="team-role">PhD Researcher</div>
+      <div class="team-focus">3D Interaction in XR</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://jensemil.dk/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Jens Emil Grønbæk</div>
+      </a>
+      <div class="team-role">Postdoc → Asst. Professor, AU</div>
+      <div class="team-focus">Collaborative XR</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://mathiasl.eu/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Mathias N. Lystbæk</div>
+      </a>
+      <div class="team-role">PhD → Postdoc, AU</div>
+      <div class="team-focus">Visual Attention in AR for Manufacturing</div>
+    </div>
+    <div class="team-card fade-in">
+      <div class="team-name">Pavel Manakhov</div>
+      <div class="team-role">Alumni · PhD → Postdoc, Lancaster</div>
+      <div class="team-focus">Mobile Spatial Interaction in XR</div>
+    </div>
+    <div class="team-card fade-in">
+      <div class="team-name">Christoph Johns</div>
+      <div class="team-role">Alumni · PhD → Postdoc, Oldenburg</div>
+      <div class="team-focus">Adaptive Interaction &amp; Multi-objective Optimization</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://utawagner.com/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Uta Wagner</div>
+      </a>
+      <div class="team-role">Alumni · PhD → Postdoc, Konstanz</div>
+      <div class="team-focus">Gaze-based 3D Interaction</div>
+    </div>
+    <div class="team-card fade-in">
+      <a href="https://qiushi-zhou.github.io/" target="_blank" style="text-decoration:none; color:inherit;">
+        <div class="team-name">Qiushi Zhou</div>
+      </a>
+      <div class="team-role">Alumni · Postdoc → Asst. Professor, HKUST</div>
+      <div class="team-focus">HCI in Extended Reality</div>
+    </div>
+  </div>
+</section>
+
+<!-- TALKS -->
+<section id="talks">
+  <div class="section-header fade-in">
+    <span class="section-label">05 / Talks</span>
+    <h2 class="section-title">Talks &amp; Presentations</h2>
+  </div>
+
+  <div class="talks-list">
+    <div class="talk-item fade-in">
+      <div class="talk-year">2026</div>
+      <div>
+        <div class="talk-venue">Upcoming · SciExplor Webinar</div>
+        <div class="talk-title">Eye-Hand Symbiosis</div>
+        <div class="talk-desc">
+          Forthcoming webinar talk. <a class="pub-link" href="https://www.sciexplor.com/webinars/ec/43" target="_blank">Event details ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
+      <div class="talk-year">2026</div>
+      <div>
+        <div class="talk-venue">June 2026 · GAZE Workshop @ CVPR 2026 — Denver, Colorado (7th Iteration)</div>
+        <div class="talk-title">Eye-Hand Symbiosis</div>
+        <div class="talk-desc">
+          Invited talk at the GAZE workshop, co-located with CVPR 2026. <a class="pub-link" href="https://gazeworkshop.github.io/2026/" target="_blank">Workshop site ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
+      <div class="talk-year">2026</div>
+      <div>
+        <div class="talk-venue">2026 · University of Tokyo</div>
+        <div class="talk-title">Eye-Hand Symbiosis</div>
+        <div class="talk-desc">
+          Invited guest talk at the University of Tokyo.
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
+      <div class="talk-year">2025</div>
+      <div>
+        <div class="talk-venue">Future of Text — May 19, 2025</div>
+        <div class="talk-title">Evolution of XR Input</div>
+        <div class="talk-desc">
+          An exploration of how input paradigms in extended reality have evolved and where they're headed — from gaze-touch to AI-adaptive interfaces.
+          <br><br>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=M9j5pVSjhwU" target="_blank">Watch on YouTube ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
+      <div class="talk-year">2024</div>
+      <div>
+        <div class="talk-venue">XR Design Community — March 9, 2024</div>
+        <div class="talk-title">How to Design for Gaze + Hand Tracking</div>
+        <div class="talk-desc">
+          Design principles, pitfalls, and opportunities for developers and researchers working with gaze and hand input on spatial computing platforms.
+          <br><br>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=5nkBzeYnprQ" target="_blank">Watch on YouTube ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
+      <div class="talk-year">2017</div>
+      <div>
+        <div class="talk-venue">ACM SUI '17</div>
+        <div class="talk-title">Gaze + Pinch Interaction in Virtual Reality</div>
+        <div class="talk-desc">
+          The original presentation of gaze-pinch, now a foundational interaction paradigm in Apple Vision Pro and other XR devices.
+          <br><br>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=YdKT42tZdQE" target="_blank">Watch on YouTube ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collapsible full archive -->
+  <div class="archive-toggle-wrap fade-in">
+    <div class="archive-toggle" onclick="this.parentElement.classList.toggle('open')">
+      <span>Full Talk Archive (2016–2025)</span>
+      <span class="pub-toggle-icon">+</span>
+    </div>
+    <div class="archive-body">
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">25/11/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Geographic Information Systems (GIS) Day, 2025, Aarhus, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">02/10/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">The Evolution of User Interfaces</div>
+          <div class="archive-talk-venue">GOTO Copenhagen 2025, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">08/07/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">XR UI Evolution & Recent Eye-Hand Research</div>
+          <div class="archive-talk-venue">Google Seminar (Online)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">19/05/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Evolution of XR Input</div>
+          <div class="archive-talk-venue">Future of Text (Online)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">06/05/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Ludwig-Fresenius-Schule, Minden/NRW (Online)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">18/03/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Unified Eye and Hand-based Interfaces</div>
+          <div class="archive-talk-venue">Logitech XR (Online)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">16/01/2025</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">WASP Winter Conference 2025</div>
+          <div class="archive-talk-venue">Linköping, Sweden</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">08/11/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Guest Talk at ETH Zurich – Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">ETH Zurich, Zurich, Switzerland</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">06/11/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Guest Talk at HCI Group – Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">University of Konstanz, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">02/12/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Guest Talk at TUM – Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Munich, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">23/11/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Future of Text Symposium, Vancouver, USA</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">31/10/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">HCI@KAIST Fall Colloquium (Online)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">30-31/10/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Digital Tech Summit, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">22-23/10/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Same Same or Different – The UI of AI</div>
+          <div class="archive-talk-venue">D3A, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">27/09/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">P1 Last Fridays Talk, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">26/09/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Guest Talk in Prof. Eve Hoggan's Course on Multimodal Interaction</div>
+          <div class="archive-talk-venue">Aarhus University, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">11/04/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Extended Reality: Learning and Pioneering What Comes After the Smartphone</div>
+          <div class="archive-talk-venue">AI Expert Talk at Uddannelses- og Forskningsmødet 2024, Kolding, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">09/03/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">How to Design for Gaze and Hand Tracking</div>
+          <div class="archive-talk-venue">Industry Talk at XR Design Discord (Virtual)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">07/03/2024</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">University of Lisbon, Lisbon, Portugal (Virtual)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">07/12/2023</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">The Power of Gaze</div>
+          <div class="archive-talk-venue">Research Seminar, Google, USA (Virtual)</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">09/11/2023</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">The Next-Generation of Immersive, Spatial UI</div>
+          <div class="archive-talk-venue">Digital Tech Summit, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">04/10/2023</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Moonshot Projects in XR at Aarhus University</div>
+          <div class="archive-talk-venue">XR Moonshot Workshop, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">01/05/2023</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">XR Interaction</div>
+          <div class="archive-talk-venue">Post-CHI XR Summer School, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">01/02/2023</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Gaze + Pinch: Interface for Future XR</div>
+          <div class="archive-talk-venue">"Is This the Year of the Metaverse?" @ The Kitchen, Aarhus, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">03/10/2022</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Multimodal Gaze Interaction</div>
+          <div class="archive-talk-venue">Guest Talk, Multimodal Interaction Course, Aarhus University</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">02/12/2021</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">DTU, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">30/11/2021</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Digital Tech Summit, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">29/11/2021</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">University of Copenhagen, Copenhagen, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">20/10/2021</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">XR Monthly / Cornell Tech, New York, USA</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">13/10/2021</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Multimodal Gaze Interaction</div>
+          <div class="archive-talk-venue">Guest Talk, Multimodal Interaction Course, Aarhus University</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">09/12/2020</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Eye-Hand Symbiosis</div>
+          <div class="archive-talk-venue">Facebook Reality Labs, Redmond, WA, USA</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">09/12/2020</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Multimodal Eye-Based Human-Computer Interaction</div>
+          <div class="archive-talk-venue">HCI Group, Bayreuth University, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">28/10/2020</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Designing Multimodal Interaction with Gaze & Touch</div>
+          <div class="archive-talk-venue">Aarhus University, Denmark</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">10/10/2019</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Exploring Perception in Mixed Reality</div>
+          <div class="archive-talk-venue">Internal Doctoral Colloquium (IDC), Vienna, Austria</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">06/2019</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Future Multimodal UI</div>
+          <div class="archive-talk-venue">FAU Erlangen-Nürnberg, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">01/2019</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Exploring Eye-Based Multimodal UI</div>
+          <div class="archive-talk-venue">University of Duisburg-Essen, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">11/2018</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Future Eye-Based and Multimodal UI</div>
+          <div class="archive-talk-venue">Colloquium Cognitive Systems, Ulm University, Germany</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">09/2018</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Novel Multimodal Interaction Techniques and UI</div>
+          <div class="archive-talk-venue">Internal Doctoral Colloquium (IDC), Venice, Italy</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">03/2018</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Using Visual Attention for Intelligent UI</div>
+          <div class="archive-talk-venue">HCILab 4th Winter School, Hirschegg, Austria</div>
+        </div>
+      </div>
+      <div class="archive-talk-row">
+        <div class="archive-talk-date">07/2016</div>
+        <div class="archive-talk-content">
+          <div class="archive-talk-title">Gaze-Shifting: Direct-Indirect Input with Pen and Touch</div>
+          <div class="archive-talk-venue">UIST Reprise Session @ ACM SIGGRAPH</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <div class="contact-inner">
+    <div>
+      <div style="display:flex; align-items:baseline; gap:1.5rem; margin-bottom:1rem;">
+        <span class="section-label" style="color:rgba(255,255,255,0.4); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;">05 / Contact</span>
+      </div>
+      <h2 style="font-family:var(--serif); font-size: clamp(1.75rem,3vw,2.5rem); color:#fff; letter-spacing:-0.02em; line-height:1.1;">Get in Touch</h2>
+      <p class="contact-text">
+        Interested in HCI, XR, or eye-hand interaction research? I'm always open to conversations about collaborations, student projects, internships, or research stays.<br><br>
+        Reach me at <a href="mailto:ken@cs.au.dk">ken@cs.au.dk</a>
+      </p>
+      <p class="contact-text" style="margin-top:0.75rem; font-size:0.85rem; color: rgba(255,255,255,0.35);">
+        Department of Computer Science<br>
+        Aarhus University, Denmark
+      </p>
+    </div>
+    <div class="contact-links-grid">
+      <a class="contact-link-row" href="https://scholar.google.com/citations?user=AqmxADkAAAAJ" target="_blank">
+        <div class="contact-link-icon">📚</div>
+        <div>
+          <div class="contact-link-label">Google Scholar</div>
+          <div class="contact-link-sub">Full publication list</div>
+        </div>
+      </a>
+      <a class="contact-link-row" href="https://www.linkedin.com/in/ken-pfeuffer-404377129/" target="_blank">
+        <div class="contact-link-icon">💼</div>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-sub">Professional profile</div>
+        </div>
+      </a>
+      <a class="contact-link-row" href="https://x.com/KenPfeuffer" target="_blank">
+        <div class="contact-link-icon">𝕏</div>
+        <div>
+          <div class="contact-link-label">Twitter / X</div>
+          <div class="contact-link-sub">@KenPfeuffer</div>
+        </div>
+      </a>
+      <a class="contact-link-row" href="https://medium.com/@ken.pfeuffer" target="_blank">
+        <div class="contact-link-icon">✍️</div>
+        <div>
+          <div class="contact-link-label">Medium</div>
+          <div class="contact-link-sub">Popular science writing</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-text">© 2025 Ken Pfeuffer · Aarhus University</span>
+  <span class="footer-text">ken@cs.au.dk</span>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+  // Carousel
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dotsContainer = document.getElementById('carousel-dots');
+  const counter = document.getElementById('carousel-counter');
+  let current = 0;
+
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+
+    // Click thumbnail to open video on YouTube
+    const videoBox = slide.querySelector('.carousel-video');
+    const ytId = slide.getAttribute('data-yt');
+    if (videoBox && ytId) {
+      videoBox.onclick = () => window.open('https://www.youtube.com/watch?v=' + ytId, '_blank');
+    }
+  });
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    dotsContainer.children[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    dotsContainer.children[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+  }
+
+  document.getElementById('prev-btn').onclick = () => goTo(current - 1);
+  document.getElementById('next-btn').onclick = () => goTo(current + 1);
+</script>
+
+</body>
+</html>

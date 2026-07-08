@@ -784,6 +784,7 @@
   <a href="#" class="nav-logo">Ken Pfeuffer</a>
   <ul class="nav-links">
     <li><a href="#research">Research</a></li>
+    <li><a href="#ehs">Eye-Hand Symbiosis</a></li>
     <li><a href="#publications">Publications</a></li>
     <li><a href="#writing">Writing</a></li>
     <li><a href="#team">Team</a></li>
@@ -825,14 +826,36 @@
   <div class="hero-visual">
     <div class="carousel-wrap">
 
-      <div class="carousel-slide active" data-yt="HaNuWBy2ljo">
+      <div class="carousel-slide active" data-yt="V64Sie2-HNk">
         <div class="carousel-video">
-          <img class="carousel-thumb" src="https://img.youtube.com/vi/HaNuWBy2ljo/hqdefault.jpg" alt="StylusPort: Investigating Teleportation Using Stylus in VR">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/V64Sie2-HNk/hqdefault.jpg" alt="StylusPort: Investigating Teleportation Using Stylus in VR">
           <div class="carousel-play">▶</div>
         </div>
         <div class="carousel-meta">
           <div class="carousel-venue">CHI '26</div>
           <div class="carousel-title">StylusPort: Investigating Teleportation Using Stylus in VR</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="sB3dtHts0yg">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/sB3dtHts0yg/hqdefault.jpg" alt="Preshaping Hand Behaviour for Direct and Indirect Manipulation of 3D Objects">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">CHI '26</div>
+          <div class="carousel-title">Preshaping Hand Behaviour for Direct and Indirect Manipulation of 3D Objects</div>
+        </div>
+      </div>
+
+      <div class="carousel-slide" data-yt="c0oewpwkwOg">
+        <div class="carousel-video">
+          <img class="carousel-thumb" src="https://img.youtube.com/vi/c0oewpwkwOg/hqdefault.jpg" alt="The Evolution of User Interfaces — GOTO Copenhagen 2025">
+          <div class="carousel-play">▶</div>
+        </div>
+        <div class="carousel-meta">
+          <div class="carousel-venue">GOTO Copenhagen '25</div>
+          <div class="carousel-title">The Evolution of User Interfaces</div>
         </div>
       </div>
 
@@ -1074,11 +1097,146 @@
   </div>
 </section>
 
+<!-- EYE-HAND SYMBIOSIS -->
+<section id="ehs" style="padding: clamp(4rem,8vw,8rem) clamp(1.5rem,5vw,5rem); background: var(--surface);">
+  <div class="section-header fade-in">
+    <span class="section-label">02 / Concept</span>
+    <h2 class="section-title">Eye-Hand Symbiosis</h2>
+  </div>
+
+  <div class="fade-in" style="max-width:780px; margin-bottom:2rem;">
+    <p style="font-size:1.05rem; color:var(--ink-soft); line-height:1.75;">
+      <em>Eye-Hand Symbiosis</em> is an interaction paradigm where the eyes and hands form a symbiotic relationship in the user interface — enabling a novel way of human-computer interaction that extends beyond each individual modality, toward a plethora of novel interactive capabilities.
+    </p>
+  </div>
+
+  <div style="max-width:780px;">
+
+    <!-- Image 1 -->
+    <div class="fade-in" style="margin-bottom:2.5rem;">
+      <div style="background:var(--border); border-radius:8px; aspect-ratio:16/7; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-family:var(--mono); font-size:0.8rem;">
+        [ ehs.png ]
+      </div>
+    </div>
+
+    <!-- Collapsible: Background -->
+    <details class="ehs-details fade-in" open>
+      <summary class="ehs-summary">Background — The computer interface so far</summary>
+      <div class="ehs-body">
+        <p>In the history of Human-Computer Interaction (HCI), major interfaces have been based on the coordination of eyes and hands, following a clear division of labour: hands provide commands via input devices, while eyes perceive the visual output on a screen. This has been a long-lasting paradigm transcending eras of computing — from command-line interfaces to desktop and mobile devices.</p>
+        <p style="margin-top:1rem;">Eye-tracking technology is rapidly advancing, enabling increasingly usable, accurate, and secure sensing of gaze. Eye-tracked headsets, glasses, smartphones, and in principle any computing device are on the horizon.</p>
+        <div style="background:var(--border); border-radius:8px; aspect-ratio:16/5; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-family:var(--mono); font-size:0.8rem; margin-top:1.5rem;">
+          [ eyehistory-5.png ]
+        </div>
+      </div>
+    </details>
+
+    <!-- Collapsible: Why eyes and hands -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">Why the hands and eyes?</summary>
+      <div class="ehs-body">
+        <p>One of the most evolved relationships in our body exists between the eyes and hands. We can intuitively coordinate what we see with what we touch, hold, and manipulate. Our hands are highly expressive and flexible — capable of learning skill and gesture — while our eyes indicate intent, attention, and interest effortlessly and instantly. Both combined form the basis for powerful human abilities to experience and manipulate the world.</p>
+        <div style="background:var(--border); border-radius:8px; aspect-ratio:16/7; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-family:var(--mono); font-size:0.8rem; margin-top:1.5rem;">
+          [ image-1.png ]
+        </div>
+      </div>
+    </details>
+
+    <!-- Collapsible: Characterisation -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">Characterisation — Direct &amp; Indirect Input</summary>
+      <div class="ehs-body">
+        <p>Hand-controlled input can be classified as direct or indirect. A mouse is <em>indirect</em> — the device mediates a cursor. A touchscreen is <em>direct</em> — input immediately acts on the object beneath the finger. This can be further decomposed using spatial and temporal indirection (Beaudouin-Lafon, CHI'00):</p>
+        <ul style="margin:1rem 0 1rem 1.25rem; line-height:1.8;">
+          <li><strong>Spatial indirection:</strong> distance between physical input and the virtual object.</li>
+          <li><strong>Temporal indirection:</strong> delay between starting the action and affecting the object.</li>
+        </ul>
+        <p>Eye+Hand UIs — such as Gaze-Touch, Gaze+Pen, or Gaze+Pinch (as in Apple Vision Pro) — are <strong>spatially indirect but temporally direct</strong>. You can interact as quickly as with direct input, yet reach any target regardless of distance.</p>
+        <div style="background:var(--border); border-radius:8px; aspect-ratio:16/7; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-family:var(--mono); font-size:0.8rem; margin-top:1.5rem;">
+          [ image.png ]
+        </div>
+        <p style="margin-top:0.75rem; font-size:0.82rem; color:var(--ink-muted);">Categorisation of input methods into degrees of spatial and temporal indirection (adopted and extended from Beaudouin-Lafon, CHI'00).</p>
+      </div>
+    </details>
+
+    <!-- Collapsible: UI Expressiveness -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">UI Expressiveness — N:N Interaction</summary>
+      <div class="ehs-body">
+        <p>As described in my 2014 UIST paper, Eye-Hand Symbiosis represents an advance for potentially all manual interfaces. A fundamental aspect is an extension of the direct manipulation paradigm:</p>
+        <ul style="margin:1rem 0 1rem 1.25rem; line-height:1.8;">
+          <li><strong>Direct input:</strong> control one object from one hand position (1:1)</li>
+          <li><strong>Eye+Hand UI:</strong> control any object you see, from any hand position (N:N)</li>
+        </ul>
+        <p>This decomposes into two powerful cases: <strong>1:N</strong> — one target, any hand position (flexibility, two-handed mappings); and <strong>N:1</strong> — any target, one hand position (reach any object at a glance, context-switching without moving the hand).</p>
+        <div style="background:var(--border); border-radius:8px; aspect-ratio:16/6; display:flex; align-items:center; justify-content:center; color:var(--ink-muted); font-family:var(--mono); font-size:0.8rem; margin-top:1.5rem;">
+          [ types2pinch6.png ]
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<style>
+  .ehs-details {
+    border-top: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+  .ehs-details:last-of-type { border-bottom: 1px solid var(--border); }
+  .ehs-summary {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 1.1rem 0;
+    cursor: pointer;
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--ink);
+  }
+  .ehs-summary::-webkit-details-marker { display: none; }
+  .ehs-summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--ink-muted);
+    transition: transform 0.2s;
+  }
+  .ehs-details[open] .ehs-summary::after { content: '−'; }
+  .ehs-body {
+    padding-bottom: 1.5rem;
+    color: var(--ink-soft);
+    font-size: 0.93rem;
+    line-height: 1.75;
+  }
+</style>
+
+<!-- AWARDS -->
+<section id="awards" style="padding: clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,5rem);">
+  <div class="section-header fade-in">
+    <span class="section-label">03 / Awards</span>
+    <h2 class="section-title">Awards, Grants &amp; Media</h2>
+  </div>
+  <div class="fade-in" style="max-width: 780px;">
+    <table style="border-collapse:collapse; width:100%; font-size:0.9rem; line-height:1.7;">
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2025</td><td>DFF Sapere Aude Research Leader</td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2025</td><td>ACM SIGCHI Special Recognition for Exemplary Industry-Academia Collaboration</td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2023–24</td><td>Best Paper Award Nomination — ACM CHI'24, SUI'23, SUI'24</td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2023</td><td>Media coverage of <a class="pub-link" href="https://dl.acm.org/doi/10.1145/3544548.3581423" target="_blank">CHI'23 paper</a> in <a class="pub-link" href="https://forums.appleinsider.com/discussion/232615" target="_blank">AppleInsider</a>, <a class="pub-link" href="https://en.shiftdelete.net/vision-pro-apples-gaze-and-pinch-gesture/" target="_blank">ShiftDelete</a>, <a class="pub-link" href="https://techtelegraph.co.uk/apples-choice-of-vision-pro-controls-is-right-say-researchers/" target="_blank">TechTelegraph</a></td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2018</td><td>5 Exceptional Review Awards — ACM CHI and UIST</td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2017</td><td>Media coverage of CHI'17 paper in <a class="pub-link" href="https://www.onmsft.com/news/microsoft-research-shows-off-simultaneous-thumb-and-pen-interaction-on-windows-10-tablets" target="_blank">MSFT</a>, <a class="pub-link" href="https://www.windowscentral.com/microsoft-research-shows-potential-thumb-and-pen-interactions-windows-tablets" target="_blank">Windows Central</a>, <a class="pub-link" href="https://www.slashgear.com/this-is-how-future-surface-tablets-and-pens-should-work-08484347" target="_blank">SlashGear</a> · <a class="pub-link" href="https://www.youtube.com/watch?v=NhMfRhVBSIQ" target="_blank">40k+ YouTube views</a></td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2016</td><td>Invited Talk — <a class="pub-link" href="http://s2016.siggraph.org/acm-siggraph-organization-events/sessions/uist-reprise-siggraph-2016.html" target="_blank">UIST Reprise @ ACM SIGGRAPH 2016</a></td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2015</td><td>Best Paper Award Nomination — ACM UIST 2015 <span style="color:var(--ink-muted);">(top 2%)</span></td></tr>
+      <tr><td style="color:var(--ink-muted); white-space:nowrap; padding-right:2rem; vertical-align:top;">2014</td><td>Dean's Award for Excellence in PhD Studies — Lancaster University <span style="color:var(--ink-muted);">(top 1%, €500)</span></td></tr>
+    </table>
+  </div>
+</section>
+
 <!-- PUBLICATIONS -->
 <div class="pub-section">
 <section id="publications">
   <div class="section-header fade-in">
-    <span class="section-label">02 / Publications</span>
+    <span class="section-label">03 / Publications</span>
     <h2 class="section-title">Publications</h2>
   </div>
   <p class="fade-in" style="color:var(--ink-muted); font-size:0.88rem; margin-bottom:2rem;">
@@ -1096,7 +1254,7 @@
         <div class="pub-info">
           <div class="pub-title">Preshaping Hand Behaviour for Direct and Indirect Manipulation of 3D Objects</div>
           <div class="pub-authors">Thorbjørn Mikkelsen, Qiushi Zhou, Mar Gonzalez-Franco, Hans Gellersen, <em>Ken Pfeuffer</em></div>
-          
+          <div class="pub-links"><a class="pub-link" href="https://youtu.be/sB3dtHts0yg" target="_blank">Video</a></div>
         </div>
       </div>
       <div class="pub-item">
@@ -1104,7 +1262,7 @@
         <div class="pub-info">
           <div class="pub-title">StylusPort: Investigating Teleportation Using Stylus in VR</div>
           <div class="pub-authors">Yang Liu, Qiushi Zhou, Mathias N. Lystbæk, Aidan Kehoe, Mario Gutierrez, Hans Gellersen, <em>Ken Pfeuffer</em></div>
-          
+          <div class="pub-links"><a class="pub-link" href="https://www.youtube.com/watch?v=V64Sie2-HNk" target="_blank">Video</a></div>
         </div>
       </div>
       <div class="pub-item">
@@ -2086,6 +2244,18 @@
       </div>
     </div>
     <div class="talk-item fade-in">
+      <div class="talk-year">2025</div>
+      <div>
+        <div class="talk-venue">GOTO Conference</div>
+        <div class="talk-title">Eye-Hand Symbiosis</div>
+        <div class="talk-desc">
+          Invited industry talk at GOTO, exploring how gaze and hand interaction can make technology more natural to use.
+          <br><br>
+          <a class="pub-link" href="https://www.youtube.com/watch?v=c0oewpwkwOg&vl=en" target="_blank">Watch on YouTube ↗</a>
+        </div>
+      </div>
+    </div>
+    <div class="talk-item fade-in">
       <div class="talk-year">2024</div>
       <div>
         <div class="talk-venue">XR Design Community — March 9, 2024</div>
@@ -2407,7 +2577,7 @@
   <div class="contact-inner">
     <div>
       <div style="display:flex; align-items:baseline; gap:1.5rem; margin-bottom:1rem;">
-        <span class="section-label" style="color:rgba(255,255,255,0.4); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;">05 / Contact</span>
+        <span class="section-label" style="color:rgba(255,255,255,0.4); font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;">07 / Contact</span>
       </div>
       <h2 style="font-family:var(--serif); font-size: clamp(1.75rem,3vw,2.5rem); color:#fff; letter-spacing:-0.02em; line-height:1.1;">Get in Touch</h2>
       <p class="contact-text">

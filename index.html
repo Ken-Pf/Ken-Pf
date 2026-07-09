@@ -1165,6 +1165,44 @@
       </div>
     </details>
 
+    <!-- Collapsible: XR Input Evolution -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">12 Years of XR Input Evolution</summary>
+      <div class="ehs-body">
+        <p>XR user input is fragmented across devices — but over time, clear paradigms have emerged. The modern XR era, beginning with Oculus and the subsequent wave of consumer devices, has seen input control schemes fall broadly into four categories: an initial experimental phase, controller-based input, hand tracking, and the emerging eye-hand paradigm.</p>
+        <p style="margin-top:1rem;">Each approach involves meaningful trade-offs. Head pointing is precise and reliable; controllers are fast and accurate; hand tracking is natural but can induce fatigue and reduce precision; and gaze-based selection reduces physical effort and can enable faster target acquisition. Crucially, newer paradigms do not simply replace older ones — controllers remain essential for high-precision tasks and gaming, hand input enables expressive interaction, and gaze+pinch suits everyday spatial UI navigation.</p>
+        <img src="diagramNew3.gif" alt="12 Years of XR Input Evolution" style="width:100%; border-radius:8px; display:block; margin-top:1.5rem;">
+        <p style="margin-top:1rem; font-size:0.82rem; color:var(--ink-muted);">
+          References:
+          [1] <a class="pub-link" href="https://lnkd.in/gX5ukCuY" target="_blank">Head vs controller vs gaze pointing</a> ·
+          [2] <a class="pub-link" href="https://lnkd.in/gbqCTnCz" target="_blank">Gorilla arm / mid-air fatigue</a> ·
+          [3] <a class="pub-link" href="https://lnkd.in/gUenV3e3" target="_blank">Head vs gaze performance</a> ·
+          [4] <a class="pub-link" href="https://lnkd.in/gtaaprwG" target="_blank">Gaze vs hand ray</a> ·
+          [5] <a class="pub-link" href="https://lnkd.in/dnpV4cWc" target="_blank">Gaze vs hand ray (2)</a> ·
+          [6] <a class="pub-link" href="https://lnkd.in/dqxCNxxD" target="_blank">Gaze+pinch principles</a>
+        </p>
+      </div>
+    </details>
+
+    <!-- Collapsible: Gaze+Pinch Design Principles -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">Gaze + Pinch — Design Principles</summary>
+      <div class="ehs-body">
+        <p>With Apple Vision Pro and Google/Samsung Galaxy XR adopting gaze+pinch as a core UI model, the paradigm is rapidly entering mainstream XR. This section distills five design principles that characterise how gaze+pinch is effectively implemented, building on the original formulation in the 2017 SUI paper.</p>
+        <p style="margin-top:1rem;">A key insight is that the gestures in gaze+pinch mirror those of direct manipulation, eliminating the need to learn new input commands. Gaze is used only for the initial onset of a gesture — minimising the risk of accidental activation, a classic problem in gaze interfaces known in the literature as the Midas Touch problem (Jacob, CHI'90). The coexistence of direct and indirect gaze+pinch within the same UI further adds flexibility, allowing users to choose the most appropriate mode for each interaction context.</p>
+        <img src="gazepinch poster principles4.gif" alt="Gaze+Pinch Design Principles" style="width:100%; border-radius:8px; display:block; margin-top:1.5rem;">
+      </div>
+    </details>
+
+    <!-- Collapsible: Gaze+Pinch Design Issues -->
+    <details class="ehs-details fade-in">
+      <summary class="ehs-summary">Gaze + Pinch — Design Issues</summary>
+      <div class="ehs-body">
+        <p>Beyond what makes gaze+pinch work well, it is equally important to understand where it breaks down. Five key design issues characterise the current limitations of gaze+pinch UIs — each of which can be framed as a user-facing problem, a design challenge, or an open research direction. As the paradigm becomes the default interaction model on leading XR platforms, addressing these issues becomes increasingly relevant for both practitioners and researchers.</p>
+        <img src="gazepinch poster issues.gif" alt="Gaze+Pinch Design Issues" style="width:100%; border-radius:8px; display:block; margin-top:1.5rem;">
+      </div>
+    </details>
+
   </div>
 </section>
 

@@ -109,13 +109,19 @@
     margin-bottom: 0.4rem;
   }
 
-  .hero-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+  .hero-video-wrap {
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 2.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .hero-video-wrap video {
+    width: 100%;
+    display: block;
     object-fit: cover;
-    margin-bottom: 1.5rem;
-    border: 3px solid var(--border);
   }
 
   .hero-title {
@@ -797,7 +803,9 @@
 <div class="hero">
   <div class="hero-text">
     <div class="hero-eyebrow">Aarhus University, Denmark</div>
-    <img src="ehs.gif" alt="Ken Pfeuffer" class="hero-avatar">
+    <div class="hero-video-wrap">
+      <video src="talkSummary2_short_lowq.mp4" autoplay loop muted playsinline></video>
+    </div>
     <h1 class="hero-name">Ken Pfeuffer</h1>
     <p class="hero-title">
       <strong>Associate Professor</strong> &amp; Sapere Aude Research Leader<br>
